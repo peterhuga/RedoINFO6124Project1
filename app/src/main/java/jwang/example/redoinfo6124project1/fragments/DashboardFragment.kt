@@ -1,17 +1,20 @@
 package jwang.example.redoinfo6124project1.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import jwang.example.redoinfo6124project1.CourseAdapter
 import jwang.example.redoinfo6124project1.MainActivity
 import jwang.example.redoinfo6124project1.R
 import jwang.example.redoinfo6124project1.databinding.FragmentDashboardBinding
-import jwang.example.redoinfo6124project1.databinding.FragmentGradesListBinding
 import jwang.example.redoinfo6124project1.models.Course
 
 
@@ -66,6 +69,16 @@ class DashboardFragment : Fragment() {
         }
 
         binding.listViewCourses.adapter = CourseAdapter(requireContext(), courses)
+        binding.listViewCourses.onItemClickListener =
+            OnItemClickListener { parent, view, position, id ->
+                val transaction = fragmentManager?.beginTransaction()
+                if (transaction != null) {
+                    transaction.replace(
+                        R.id.fragment_placeholder,
+                        GradesListFragment.newInstance()
+                    ).addToBackStack(null).commit()
+                }
+            }
         return binding.root
     }
 

@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import jwang.example.redoinfo6124project1.CourseAdapter
+import jwang.example.redoinfo6124project1.MainActivity
 import jwang.example.redoinfo6124project1.R
 import jwang.example.redoinfo6124project1.databinding.FragmentDashboardBinding
 import jwang.example.redoinfo6124project1.databinding.FragmentGradesListBinding
+import jwang.example.redoinfo6124project1.models.Course
 
 
 private const val ARG_PARAM1 = "param1"
@@ -23,6 +26,15 @@ class DashboardFragment : Fragment() {
         requireActivity().findViewById<Toolbar>(R.id.toolbar)
     }
     private lateinit var binding: FragmentDashboardBinding
+
+    val courses: List<Course> = listOf(
+        Course("INFO6124", "Android Application Development", 0),
+        Course("INFO6125", "iOS Application Development", 0),
+        Course("INFO6126", "UI/UX Design" , 0),
+        Course("INFO6127", "Enterprise Platform" , 0),
+        Course("INFO6128", "Progressive Web Application" , 0),
+        Course("INFO6129", "Cross-platform Application Development" , 0)
+    )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +64,8 @@ class DashboardFragment : Fragment() {
                 }
             }
         }
+
+        binding.listViewCourses.adapter = CourseAdapter(requireContext(), courses)
         return binding.root
     }
 

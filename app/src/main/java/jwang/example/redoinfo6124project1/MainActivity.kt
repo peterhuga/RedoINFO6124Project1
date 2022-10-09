@@ -3,6 +3,7 @@ package jwang.example.redoinfo6124project1
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import jwang.example.redoinfo6124project1.fragments.DashboardFragment
 import jwang.example.redoinfo6124project1.fragments.GradesListFragment
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(
                 R.id.fragment_placeholder,
-                GradesListFragment.newInstance()
+                DashboardFragment.newInstance("dashboard")
             ).commit()
         }
     }

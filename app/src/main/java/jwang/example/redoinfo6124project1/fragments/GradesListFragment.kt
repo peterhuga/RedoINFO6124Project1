@@ -7,11 +7,10 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat.animate
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import jwang.example.redoinfo6124project1.GradeAdapter
-import jwang.example.redoinfo6124project1.MainActivity
 import jwang.example.redoinfo6124project1.R
 import jwang.example.redoinfo6124project1.databinding.FragmentGradesListBinding
 
@@ -34,8 +33,7 @@ class GradesListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_grades_list, container, false)
+
         binding = FragmentGradesListBinding.inflate(inflater, container, false)
         binding.fabShowMenu.setOnClickListener{
             if (isFabShown) {
@@ -75,33 +73,40 @@ class GradesListFragment : Fragment() {
 //        (context as MainActivity).toolbar.title = "haha"
 //    }
 
-
-
-
-
-
-
-
-
     private fun showFabMenu() {
         isFabShown = true
+        //binding.fabShowMenu.isClickable = false
         binding.fabLayoutAddLab.visibility = ConstraintLayout.VISIBLE
+
+        binding.fabLayoutAddLab.animate().translationYBy(
+            -resources.getDimension(R.dimen.standard_155) - 60).apply {
+                duration = 100
+        }.withEndAction{
+            binding.fabLayoutAddLab.animate().translationYBy(60.toFloat()).apply {
+                duration = 75
+            }
+        }
+        binding.fabShowMenu.animate().duration = 100
+        binding.fabShowMenu.animate().rotationBy(45.0f)
+
+
     }
 
     private fun hideFabMenu() {
         isFabShown = false
-        binding.fabLayoutAddLab.visibility = ConstraintLayout.INVISIBLE
-
-    }
-
-    private fun fabAnimation(view:View) {
-        //val anim: Animation = AnimationUtils.loadAnimation(view.context, translate_position )
+        binding.fabLayoutAddLab.animate()
+            .translationYBy(resources.getDimension(R.dimen.standard_155))
+            .withEndAction { binding.fabLayoutAddLab.visibility = ConstraintLayout.INVISIBLE }
+        binding.fabShowMenu.animate().rotationBy(-45.0f)
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance() =
             GradesListFragment()
     }
+
+
 }
+
+

@@ -30,15 +30,14 @@ class CourseAdapter (
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
 
-
-        var convertView = convertView
+        var convertView: View?
         convertView = LayoutInflater.from(context).inflate(R.layout.course_listview_item, parent, false)
         courseCodeTV = convertView.findViewById(R.id.textViewCourseCode)
         currentGradeTV = convertView.findViewById(R.id.textViewCurrentGrade)
         courseCodeTV.text = courseList[position].courseCode
         currentGradeTV.text = courseList[position].currentGrade.toString()
-        val lp = parent?.layoutParams
-        lp?.height?.div(6)
+//        val lp = parent?.layoutParams
+//        convertView.layoutParams.height = lp?.height?.div(6)!!
 
 
         return convertView

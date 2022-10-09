@@ -18,7 +18,7 @@ import jwang.example.redoinfo6124project1.databinding.FragmentDashboardBinding
 import jwang.example.redoinfo6124project1.models.Course
 
 
-private const val ARG_PARAM1 = "param1"
+const val ARG_PARAM1 = "param1"
 
 
 
@@ -71,11 +71,12 @@ class DashboardFragment : Fragment() {
         binding.listViewCourses.adapter = CourseAdapter(requireContext(), courses)
         binding.listViewCourses.onItemClickListener =
             OnItemClickListener { parent, view, position, id ->
+                val fragParam = courses.get(position).courseCode
                 val transaction = fragmentManager?.beginTransaction()
                 if (transaction != null) {
                     transaction.replace(
                         R.id.fragment_placeholder,
-                        GradesListFragment.newInstance()
+                        GradesListFragment.newInstance(fragParam)
                     ).addToBackStack(null).commit()
                 }
             }

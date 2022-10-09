@@ -16,6 +16,7 @@ import jwang.example.redoinfo6124project1.databinding.FragmentGradesListBinding
 
 
 class GradesListFragment : Fragment() {
+    private var param1: String? = null
     private val toolbar: Toolbar by lazy {
         requireActivity().findViewById<Toolbar>(R.id.toolbar)
     }
@@ -28,6 +29,13 @@ class GradesListFragment : Fragment() {
 
 
     private var isFabShown = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +52,7 @@ class GradesListFragment : Fragment() {
         }
         binding.fabLayoutAddLab.visibility = ConstraintLayout.INVISIBLE
 
-        toolbar.title = "My Grades"
+        toolbar.title = param1
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.inflateMenu(R.menu.toolbar_main)
         toolbar.setNavigationOnClickListener{
@@ -103,8 +111,12 @@ class GradesListFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            GradesListFragment()
+        fun newInstance(param1: String) =
+            GradesListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                }
+            }
     }
 
 

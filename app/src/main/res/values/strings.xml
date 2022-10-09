@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Redo 6124 Project1</string>
+    <string name="menu_about">About</string>
+    <string name="search_hint">Search</string>
+    <string name="no_entries">No entries :(</string>
+    <string name="new_lab_grade">New Lab Grade</string>
+</resources>

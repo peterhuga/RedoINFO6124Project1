@@ -1,6 +1,10 @@
 package jwang.example.redoinfo6124project1
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
+import android.view.View
+import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import jwang.example.redoinfo6124project1.fragments.DashboardFragment
@@ -20,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(
                 R.id.fragment_placeholder,
-                DashboardFragment.newInstance("dashboard")
+                DashboardFragment.newInstance("ok")
             ).commit()
         }
     }

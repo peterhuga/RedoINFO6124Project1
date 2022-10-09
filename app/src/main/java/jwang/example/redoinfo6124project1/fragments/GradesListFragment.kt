@@ -48,6 +48,7 @@ class GradesListFragment : Fragment() {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.inflateMenu(R.menu.toolbar_main)
         toolbar.setNavigationOnClickListener{
+            fragmentManager?.popBackStack()
         }
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {

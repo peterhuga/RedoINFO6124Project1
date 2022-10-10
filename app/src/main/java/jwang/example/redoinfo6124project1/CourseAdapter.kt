@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import jwang.example.redoinfo6124project1.models.Course
-
+/*
+This adapter is used to bind course list to listview in the dashboard screen.
+The data is static and will not be updated.
+ */
 class CourseAdapter (
     private val context: Context,
     private val courseList: List<Course>

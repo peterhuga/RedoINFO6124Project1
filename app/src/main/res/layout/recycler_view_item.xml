@@ -16,8 +16,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,11 +26,26 @@
         tools:ignore="ContentDescription" />
 
     <TextView
+        android:id="@+id/tvGradeType"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center|start"
+        android:text="Project"
+        android:textColor="@color/textDark"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/full_mark_label"
+        app:layout_constraintStart_toEndOf="@+id/imageViewGradeType"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/full_mark_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="8dp"
         android:text="Full Mark"
         android:textColor="@color/item_view_title_right"
         app:layout_constraintEnd_toStartOf="@+id/my_mark_label"
@@ -41,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="8dp"
         android:text="My Mark"
         android:textColor="@color/item_view_title_right"
         app:layout_constraintEnd_toStartOf="@+id/mark_weight_label"
@@ -52,8 +67,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:text="Mark Weight"
+        android:layout_marginEnd="8dp"
+        android:text="Weight"
         android:textColor="@color/item_view_title_right"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageViewGradeType" />

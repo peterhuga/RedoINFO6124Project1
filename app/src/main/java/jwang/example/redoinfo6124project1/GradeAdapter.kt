@@ -13,7 +13,7 @@ class GradeAdapter(private val dataSet: ArrayList<Grade>): RecyclerView.Adapter<
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val tvFullMark = view.findViewById<TextView>(R.id.full_mark_value)
         val tvMyMark = view.findViewById<TextView>(R.id.my_mark_value)
-        val tvMarkWeight = view.findViewById<TextView>(R.id.mark_weight_label)
+        val tvMarkWeight = view.findViewById<TextView>(R.id.mark_weight_value)
         val imageView = view.findViewById<ImageView>(R.id.imageViewGradeType)
     }
 
@@ -26,7 +26,7 @@ class GradeAdapter(private val dataSet: ArrayList<Grade>): RecyclerView.Adapter<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvFullMark.text = dataSet[position].fullMark.toString()
         holder.tvMyMark.text = dataSet[position].myMark.toString()
-        holder.tvMarkWeight.text = dataSet[position].weight.toString()
+        holder.tvMarkWeight.text = dataSet[position].weight.toString() + "%"
         holder.imageView.setImageResource(R.drawable.ic_exam)
 
     }

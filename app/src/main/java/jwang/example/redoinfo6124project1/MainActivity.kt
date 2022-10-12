@@ -17,6 +17,16 @@ val gradeList: ArrayList<Grade> = arrayListOf(
     Grade(GradeType.PROJECT, 20, 17, 10),
     Grade(GradeType.LAB, 20, 17, 10),
     Grade(GradeType.EXAM, 20, 17, 10),
+    Grade(GradeType.LAB, 20, 17, 10),
+    Grade(GradeType.LAB, 20, 17, 10),
+    Grade(GradeType.PROJECT, 20, 17, 10),
+    Grade(GradeType.LAB, 20, 17, 10),
+    Grade(GradeType.EXAM, 20, 17, 10),
+    Grade(GradeType.LAB, 20, 17, 10),
+    Grade(GradeType.LAB, 20, 17, 10),
+    Grade(GradeType.PROJECT, 20, 17, 10),
+    Grade(GradeType.LAB, 20, 17, 10),
+    Grade(GradeType.EXAM, 20, 17, 10),
     Grade(GradeType.LAB, 20, 17, 10)
 
 )

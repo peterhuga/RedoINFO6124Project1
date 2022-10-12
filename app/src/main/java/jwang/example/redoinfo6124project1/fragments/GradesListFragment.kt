@@ -1,16 +1,17 @@
 package jwang.example.redoinfo6124project1.fragments
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import jwang.example.redoinfo6124project1.GradeAdapter
@@ -67,8 +68,14 @@ class GradesListFragment : Fragment() {
         binding.fabLab.setOnClickListener { showDialogFragment(GradeType.LAB) }
         viewAdapter = GradeAdapter(gradeList)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        binding.recyclerView.setHasFixedSize(true)
+
         binding.recyclerView.adapter = viewAdapter
+        binding.recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         Log.d("MyTag", "recyclerView")
 
         setHasOptionsMenu(true)
@@ -84,13 +91,23 @@ class GradesListFragment : Fragment() {
 
 
         (context as MainActivity).toolbar.title = param1
+        if (gradeList.size > 0) {
+            binding.tvNoEntry.visibility = TextView.GONE
+        }
     }
+
+
 
     private fun showFabMenu() {
         isFabShown = true
         //binding.fabShowMenu.isClickable = false
         binding.fabLayoutAddLab.visibility = ConstraintLayout.VISIBLE
         binding.fabLayoutAddExam.visibility = ConstraintLayout.VISIBLE
+
+        binding.recyclerView.animate().alpha(0.15f).apply {
+            duration = 175
+        }
+        //viewAdapter.isClickable = false
 
         binding.fabLayoutAddLab.animate().translationYBy(
             -resources.getDimension(R.dimen.standard_155) - 60).apply {
@@ -122,6 +139,7 @@ class GradesListFragment : Fragment() {
 
     private fun hideFabMenu() {
         isFabShown = false
+        binding.recyclerView.animate().alpha(1.0f)
         binding.fabLayoutAddLab.animate()
             .translationYBy(resources.getDimension(R.dimen.standard_155))
             .withEndAction { binding.fabLayoutAddLab.visibility = ConstraintLayout.INVISIBLE }

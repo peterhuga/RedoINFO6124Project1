@@ -12,7 +12,7 @@ import jwang.example.redoinfo6124project1.fragments.GradesListFragment
 import jwang.example.redoinfo6124project1.models.Grade
 import jwang.example.redoinfo6124project1.models.GradeType
 
-val gradeList: List<Grade> = listOf(
+val gradeList: ArrayList<Grade> = arrayListOf(
     Grade(GradeType.LAB, 20, 17, 10),
     Grade(GradeType.PROJECT, 20, 17, 10),
     Grade(GradeType.LAB, 20, 17, 10),

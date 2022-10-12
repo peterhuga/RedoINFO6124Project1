@@ -1,19 +1,25 @@
 package jwang.example.redoinfo6124project1.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.ViewCompat.animate
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import jwang.example.redoinfo6124project1.GradeAdapter
 import jwang.example.redoinfo6124project1.MainActivity
 import jwang.example.redoinfo6124project1.R
 import jwang.example.redoinfo6124project1.databinding.FragmentGradesListBinding
+import jwang.example.redoinfo6124project1.gradeList
+import jwang.example.redoinfo6124project1.models.Grade
+import jwang.example.redoinfo6124project1.models.GradeType
 
 
 class GradesListFragment : Fragment() {
@@ -58,7 +64,15 @@ class GradesListFragment : Fragment() {
 
 
         binding.tvCourseName.text = param2
+        binding.fabLab.setOnClickListener { showDialogFragment(GradeType.LAB) }
+        viewAdapter = GradeAdapter(gradeList)
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.adapter = viewAdapter
+        Log.d("MyTag", "recyclerView")
+
         setHasOptionsMenu(true)
+
         return binding.root
 
     }
@@ -135,6 +149,66 @@ class GradesListFragment : Fragment() {
                 }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showDialogFragment(type: GradeType){
+
+        val layout = LinearLayout(context)
+        layout.orientation = LinearLayout.VERTICAL
+        val etDialogFullMark = EditText(context).apply { this.hint = "Full Mark"}
+        val etDialogMyMark = EditText(context).apply { this.hint = "My Mark" }
+        val etDialogWeight = EditText(context).apply { this.hint = "Weight(%)" }
+        layout.addView(etDialogFullMark)
+        layout.addView(etDialogMyMark)
+        layout.addView(etDialogWeight)
+        layout.setPadding(50, 20, 50, 20)
+
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(param1 + " " + type.string)
+        builder.setView(layout)
+
+        builder.setCancelable(false)
+
+
+
+
+        builder.setPositiveButton("Save"){
+                dialog, which -> Log.d("MyTag", "positive button")
+
+
+
+        }
+        builder.setNegativeButton("Cancel"){
+                dialog, which -> dialog.cancel()
+        }
+
+        val dialog = builder.show()
+
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            val fullMark = etDialogFullMark.text.toString()
+            val myMark = etDialogMyMark.text.toString()
+            val weight = etDialogWeight.text.toString()
+            if (fullMark == ""|| myMark == "" || weight == ""){
+                Toast.makeText(context, getString(R.string.empty_field), Toast.LENGTH_LONG).show()
+            }else if (fullMark.toInt() > 100){
+                Toast.makeText(context, getString(R.string.full_over_100),Toast.LENGTH_SHORT).show()
+            }else if (myMark.toInt() > fullMark.toInt()) {
+                Toast.makeText(context, getString(R.string.rcv_gt_full),Toast.LENGTH_SHORT).show()
+            } else if (weight.toInt() > 100) {
+                Toast.makeText(context, getString(R.string.perc_gt_100),Toast.LENGTH_SHORT).show()
+            }else {
+
+                var grade = Grade(
+                    type, fullMark.toInt(), myMark.toInt(), weight.toInt()
+                )
+
+                gradeList.add(grade)
+
+                dialog.dismiss()
+                Log.d("MyTag", "array size: ${gradeList.size}")
+            }
+        }
     }
 
     companion object {

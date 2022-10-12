@@ -26,27 +26,11 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/course_title"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center|start"
-        android:text="INFO6124"
-        android:textColor="@color/textDark"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewGradeType"
-        app:layout_constraintEnd_toStartOf="@+id/full_mark_value"
-        app:layout_constraintStart_toEndOf="@+id/imageViewGradeType"
-        app:layout_constraintTop_toTopOf="@+id/imageViewGradeType" />
-
-    <TextView
         android:id="@+id/full_mark_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="32dp"
         android:text="Full Mark"
         android:textColor="@color/item_view_title_right"
         app:layout_constraintEnd_toStartOf="@+id/my_mark_label"
@@ -57,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="32dp"
         android:text="My Mark"
         android:textColor="@color/item_view_title_right"
         app:layout_constraintEnd_toStartOf="@+id/mark_weight_label"

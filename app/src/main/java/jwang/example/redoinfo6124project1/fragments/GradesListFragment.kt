@@ -20,8 +20,10 @@ import jwang.example.redoinfo6124project1.MainActivity
 import jwang.example.redoinfo6124project1.R
 import jwang.example.redoinfo6124project1.databinding.FragmentGradesListBinding
 import jwang.example.redoinfo6124project1.gradeList
+
 import jwang.example.redoinfo6124project1.models.Grade
 import jwang.example.redoinfo6124project1.models.GradeType
+
 
 
 class GradesListFragment : Fragment() {
@@ -31,19 +33,24 @@ class GradesListFragment : Fragment() {
     private lateinit var binding: FragmentGradesListBinding
 
     private lateinit var viewAdapter: GradeAdapter
-    private lateinit var viewManager: RecyclerView.LayoutManager
 
 
 
+
+
+    private var thisGradeList = arrayListOf<Grade>()
 
     private var isFabShown = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
+        arguments?.let { it ->
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+
+
         }
+        thisGradeList = gradeList.filter { it.courseName == param1 } as ArrayList<Grade>
     }
 
     override fun onCreateView(
@@ -81,7 +88,7 @@ class GradesListFragment : Fragment() {
         }
 
 
-        viewAdapter = GradeAdapter(gradeList)
+        viewAdapter = GradeAdapter(thisGradeList)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
         binding.recyclerView.adapter = viewAdapter
@@ -91,7 +98,6 @@ class GradesListFragment : Fragment() {
                 DividerItemDecoration.VERTICAL
             )
         )
-        Log.d("MyTag", "recyclerView")
 
         setHasOptionsMenu(true)
 
@@ -106,7 +112,7 @@ class GradesListFragment : Fragment() {
 
 
         (context as MainActivity).toolbar.title = param1
-        if (gradeList.size > 0) {
+        if (thisGradeList.size > 0) {
             binding.tvNoEntry.visibility = TextView.GONE
         }
     }
@@ -190,12 +196,24 @@ class GradesListFragment : Fragment() {
                 Log.d("MyTag", "back clicked")
             }
             R.id.item_clear_all -> {
-                    Log.d("MyTag", "clear clicked")
-                    gradeList.clear()
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("Warning")
+                    .setMessage("Are you sure to delete all the records?")
+                    .setCancelable(true)
+                    .setPositiveButton("OK"){
+                    d,w ->
+                    Log.d("MyTag", "clear all clicked")
+                        gradeList.removeAll(thisGradeList.toSet())
+                    thisGradeList.clear()
                     viewAdapter.notifyDataSetChanged()
                     binding.tvNoEntry.visibility = TextView.VISIBLE
-                    true
-                }
+                        d.dismiss()
+                    }
+                    .setNegativeButton("Cancel"){
+                        dialog, which -> dialog.cancel()
+                    }
+                    .show()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -228,7 +246,7 @@ class GradesListFragment : Fragment() {
         builder.setView(layout)
 
         builder.setCancelable(false)
-
+// Though this listener does nothing, it has to be implemented to show the positive button.
         builder.setPositiveButton("Save"){
                 dialog, which -> Log.d("MyTag", "positive button")
 
@@ -257,12 +275,12 @@ Don't create(). Only show(). Otherwise it won't work to overwrite the listner.
                 Toast.makeText(context, getString(R.string.perc_gt_100),Toast.LENGTH_SHORT).show()
             }else {
 
-                var grade = Grade(
-                    type, fullMark.toInt(), myMark.toInt(), weight.toInt()
+                var grade = Grade(param1!!, type, fullMark.toInt(), myMark.toInt(), weight.toInt()
                 )
 
                 gradeList.add(grade)
-
+                thisGradeList.add(grade)
+                binding.tvNoEntry.visibility = TextView.GONE
                 dialog.dismiss()
                 Log.d("MyTag", "array size: ${gradeList.size}")
             }

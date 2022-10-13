@@ -32,7 +32,7 @@ class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
 
     val courses: List<Course> = listOf(
-        Course("INFO6124", "Android App Development", 0),
+        Course("INFO6124", "Android App Development", 85),
         Course("INFO6125", "iOS App Development", 0),
         Course("INFO6126", "UI/UX Design" , 0),
         Course("INFO6127", "Enterprise Platform" , 0),

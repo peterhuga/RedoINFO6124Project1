@@ -35,9 +35,8 @@ class CourseAdapter (
         courseCodeTV = convertView.findViewById(R.id.textViewCourseCode)
         currentGradeTV = convertView.findViewById(R.id.textViewCurrentGrade)
         courseCodeTV.text = courseList[position].courseCode
-        currentGradeTV.text = courseList[position].currentGrade.toString()
-//        val lp = parent?.layoutParams
-//        convertView.layoutParams.height = lp?.height?.div(6)!!
+        currentGradeTV.text = courseList[position].currentGrade.toString() + "%"
+
 
 
         return convertView

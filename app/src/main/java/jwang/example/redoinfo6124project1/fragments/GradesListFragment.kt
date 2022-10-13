@@ -2,6 +2,7 @@ package jwang.example.redoinfo6124project1.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.*
 import android.widget.EditText
@@ -192,6 +193,7 @@ class GradesListFragment : Fragment() {
                     Log.d("MyTag", "clear clicked")
                     gradeList.clear()
                     viewAdapter.notifyDataSetChanged()
+                    binding.tvNoEntry.visibility = TextView.VISIBLE
                     true
                 }
         }
@@ -200,11 +202,22 @@ class GradesListFragment : Fragment() {
 
     private fun showDialogFragment(type: GradeType){
 
+        // Dialog can have only one view, so wrap all edittext views in a layout and add it to the dialog
+
         val layout = LinearLayout(context)
         layout.orientation = LinearLayout.VERTICAL
-        val etDialogFullMark = EditText(context).apply { this.hint = "Full Mark"}
-        val etDialogMyMark = EditText(context).apply { this.hint = "My Mark" }
-        val etDialogWeight = EditText(context).apply { this.hint = "Weight(%)" }
+        val etDialogFullMark = EditText(context).apply {
+            this.hint = "Full Mark"
+            inputType = InputType.TYPE_CLASS_NUMBER
+        }
+        val etDialogMyMark = EditText(context).apply {
+            this.hint = "My Mark"
+            inputType = InputType.TYPE_CLASS_NUMBER
+        }
+        val etDialogWeight = EditText(context).apply {
+            this.hint = "Weight(%)"
+            inputType = InputType.TYPE_CLASS_NUMBER
+        }
         layout.addView(etDialogFullMark)
         layout.addView(etDialogMyMark)
         layout.addView(etDialogWeight)
@@ -216,13 +229,8 @@ class GradesListFragment : Fragment() {
 
         builder.setCancelable(false)
 
-
-
-
         builder.setPositiveButton("Save"){
                 dialog, which -> Log.d("MyTag", "positive button")
-
-
 
         }
         builder.setNegativeButton("Cancel"){

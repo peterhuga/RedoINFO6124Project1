@@ -26,11 +26,9 @@ import jwang.example.redoinfo6124project1.models.GradeType
 class GradesListFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
-    private val toolbar: Toolbar by lazy {
-        requireActivity().findViewById<Toolbar>(R.id.toolbar)
-    }
+
     private lateinit var binding: FragmentGradesListBinding
-    //private lateinit var recyclerView: RecyclerView
+
     private lateinit var viewAdapter: GradeAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
 
@@ -62,10 +60,26 @@ class GradesListFragment : Fragment() {
         }
         binding.fabLayoutAddLab.visibility = ConstraintLayout.INVISIBLE
         binding.fabLayoutAddExam.visibility = ConstraintLayout.INVISIBLE
+        binding.fabLayoutAddProject.visibility = ConstraintLayout.INVISIBLE
 
 
         binding.tvCourseName.text = param2
-        binding.fabLab.setOnClickListener { showDialogFragment(GradeType.LAB) }
+        binding.fabLab.setOnClickListener {
+            showDialogFragment(GradeType.LAB)
+            hideFabMenu()
+        }
+
+        binding.fabExam.setOnClickListener {
+            showDialogFragment(GradeType.EXAM)
+            hideFabMenu()
+        }
+
+        binding.fabProject.setOnClickListener {
+            showDialogFragment(GradeType.PROJECT)
+            hideFabMenu()
+        }
+
+
         viewAdapter = GradeAdapter(gradeList)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -86,7 +100,7 @@ class GradesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //(context as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+
         (context as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
@@ -103,11 +117,11 @@ class GradesListFragment : Fragment() {
         //binding.fabShowMenu.isClickable = false
         binding.fabLayoutAddLab.visibility = ConstraintLayout.VISIBLE
         binding.fabLayoutAddExam.visibility = ConstraintLayout.VISIBLE
+        binding.fabLayoutAddProject.visibility = ConstraintLayout.VISIBLE
 
         binding.recyclerView.animate().alpha(0.15f).apply {
             duration = 175
         }
-        //viewAdapter.isClickable = false
 
         binding.fabLayoutAddLab.animate().translationYBy(
             -resources.getDimension(R.dimen.standard_155) - 60).apply {
@@ -123,6 +137,15 @@ class GradesListFragment : Fragment() {
             duration = 100
         }.withEndAction{
             binding.fabLayoutAddExam.animate().translationYBy(40.toFloat()).apply {
+                duration = 75
+            }
+        }
+
+        binding.fabLayoutAddProject.animate().translationYBy(
+            -resources.getDimension(R.dimen.standard_55) - 20).apply {
+            duration = 100
+        }.withEndAction{
+            binding.fabLayoutAddProject.animate().translationYBy(20.toFloat()).apply {
                 duration = 75
             }
         }
@@ -146,12 +169,15 @@ class GradesListFragment : Fragment() {
         binding.fabLayoutAddExam.animate()
             .translationYBy(resources.getDimension(R.dimen.standard_105))
             .withEndAction { binding.fabLayoutAddExam.visibility = ConstraintLayout.INVISIBLE }
+        binding.fabLayoutAddProject.animate()
+            .translationYBy(resources.getDimension(R.dimen.standard_55))
+            .withEndAction { binding.fabLayoutAddProject.visibility = ConstraintLayout.INVISIBLE }
         binding.fabShowMenu.animate().rotationBy(-45.0f)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
-        inflater.inflate(R.menu.toolbar_main, menu)
+        inflater.inflate(R.menu.toolbar_list, menu)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -160,9 +186,12 @@ class GradesListFragment : Fragment() {
         when (item?.itemId) {
             android.R.id.home -> {
                 (context as MainActivity).supportFragmentManager.popBackStackImmediate()
+                Log.d("MyTag", "back clicked")
             }
-            R.id.item_about -> {
-                    Log.d("MyTag", "about clicked")
+            R.id.item_clear_all -> {
+                    Log.d("MyTag", "clear clicked")
+                    gradeList.clear()
+                    viewAdapter.notifyDataSetChanged()
                     true
                 }
         }
@@ -199,7 +228,10 @@ class GradesListFragment : Fragment() {
         builder.setNegativeButton("Cancel"){
                 dialog, which -> dialog.cancel()
         }
-
+/*
+Disable dialog positive button dismiss the dialog if some check is not passed.
+Don't create(). Only show(). Otherwise it won't work to overwrite the listner.
+ */
         val dialog = builder.show()
 
 

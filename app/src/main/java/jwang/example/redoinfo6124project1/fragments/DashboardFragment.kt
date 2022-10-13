@@ -53,23 +53,10 @@ class DashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        //toolbar.title = "Redo 6124 Project1"
+
         setHasOptionsMenu(true)
 
 
-  //      toolbar.inflateMenu(R.menu.toolbar_main)
-//
-//        toolbar.setOnMenuItemClickListener {
-//            when (it.itemId) {
-//                R.id.item_about -> {
-//                    Log.d("MyTag", "about clicked")
-//                    true
-//                }
-//                else -> {
-//                    super.onOptionsItemSelected(it)
-//                }
-//            }
-//        }
 
         binding.listViewCourses.adapter = CourseAdapter(requireContext(), courses)
         binding.listViewCourses.onItemClickListener =
@@ -77,12 +64,12 @@ class DashboardFragment : Fragment() {
                 val courseCode = courses.get(position).courseCode
                 val courseName = courses.get(position).courseName
                 val transaction = fragmentManager?.beginTransaction()
-                if (transaction != null) {
-                    transaction.replace(
+
+                    transaction?.replace(
                         R.id.fragment_placeholder,
                         GradesListFragment.newInstance(courseCode, courseName)
-                    ).addToBackStack(null).commit()
-                }
+                    )?.addToBackStack(null)?.commit()
+
             }
         return binding.root
     }
@@ -102,6 +89,23 @@ class DashboardFragment : Fragment() {
         inflater.inflate(R.menu.toolbar_main, menu)
 
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            R.id.item_about -> {
+                Log.d("MyTag", "about clicked")
+                val ft = requireFragmentManager().beginTransaction()
+                ft.replace(
+                    R.id.fragment_placeholder,
+                    AboutFragment.newInstance()
+                )
+                ft.addToBackStack(null)
+                ft.commit()
+                true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
     tools:context=".fragments.GradesListFragment">
 
     <TextView
@@ -15,7 +17,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:text="My Courses Name"
-        android:textSize="24sp"
+        android:textSize="20sp"
 
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/divider2"
@@ -28,11 +30,11 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
 
-        app:layout_constraintTop_toBottomOf="@+id/tvCourseName"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        android:background="@color/colorAccent"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvCourseName" />
 
     <TextView
         android:id="@+id/tvNoEntry"
@@ -48,7 +50,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -144,7 +146,45 @@
             tools:ignore="SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fabLayoutAddProject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/fabShowMenu"
+        app:layout_constraintEnd_toEndOf="@+id/fabShowMenu"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/fabShowMenu"
+        app:layout_constraintTop_toTopOf="@+id/fabShowMenu">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/fab_menu_text_view_shape"
+            android:text="New Project Grade"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toBottomOf="@+id/fabProject"
+            app:layout_constraintEnd_toStartOf="@+id/fabProject"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fabProject" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabProject"
+            android:layout_width="@dimen/fab_small_size"
+            android:layout_height="@dimen/fab_small_size"
+            android:layout_gravity="bottom|end"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:tint="#ffffff"
+            app:fabCustomSize="@dimen/fab_small_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_project"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -160,4 +200,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add"
         tools:ignore="SpeakableTextPresentCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

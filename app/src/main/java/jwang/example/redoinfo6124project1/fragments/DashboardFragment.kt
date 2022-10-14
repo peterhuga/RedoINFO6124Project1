@@ -11,12 +11,11 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import jwang.example.redoinfo6124project1.CourseAdapter
-import jwang.example.redoinfo6124project1.MainActivity
-import jwang.example.redoinfo6124project1.R
+import jwang.example.redoinfo6124project1.*
 import jwang.example.redoinfo6124project1.databinding.FragmentDashboardBinding
-import jwang.example.redoinfo6124project1.gradeList
+//import jwang.example.redoinfo6124project1.gradeList
 import jwang.example.redoinfo6124project1.models.Course
+import jwang.example.redoinfo6124project1.models.Grade
 
 
 const val ARG_PARAM1 = "param1"
@@ -95,21 +94,36 @@ class DashboardFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         for (course in courses) {
-            var currentGrade:Double = 0.0
-            var currentMark:Double = 0.0
-            var currentFullMark: Double = 0.0
-            gradeList.forEach {
-                if (it.courseName == course.courseCode) {
-                    currentFullMark += it.fullMark
-                    currentMark += it.myMark
-                    if (currentMark!=0.0) {
-                        currentGrade = Math.ceil(currentMark / currentFullMark * 100)
-                    }
-                }
+            when(course.courseCode){
+                "INFO6124" -> getSummary(course, gradeList6124)
+
+                "INFO6125" -> getSummary(course, gradeList6125)
+                "INFO6126" -> getSummary(course, gradeList6126)
+                "INFO6127" -> getSummary(course, gradeList6127)
+                "INFO6128" -> getSummary(course, gradeList6128)
+                "INFO6129" -> getSummary(course, gradeList6129)
+
+
             }
-            course.currentMarks = currentMark.toInt()
-            course.currentGrade = currentGrade.toInt()
         }
+
+    }
+
+    private fun getSummary(course: Course, gradeList: ArrayList<Grade>) {
+        var currentGrade: Double = 0.0
+        var currentMark: Double = 0.0
+        var currentFullMark: Double = 0.0
+        gradeList.forEach {
+
+                currentFullMark += it.fullMark
+                currentMark += it.myMark
+                if (currentMark != 0.0) {
+                    currentGrade = Math.ceil(currentMark / currentFullMark * 100)
+                }
+
+        }
+        course.currentMarks = currentMark.toInt()
+        course.currentGrade = currentGrade.toInt()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

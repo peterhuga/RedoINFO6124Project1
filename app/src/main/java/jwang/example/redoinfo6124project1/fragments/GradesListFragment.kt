@@ -17,11 +17,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import jwang.example.redoinfo6124project1.GradeAdapter
-import jwang.example.redoinfo6124project1.MainActivity
-import jwang.example.redoinfo6124project1.R
+import jwang.example.redoinfo6124project1.*
 import jwang.example.redoinfo6124project1.databinding.FragmentGradesListBinding
-import jwang.example.redoinfo6124project1.gradeList
 import jwang.example.redoinfo6124project1.models.Grade
 import jwang.example.redoinfo6124project1.models.GradeType
 
@@ -50,7 +47,21 @@ class GradesListFragment : Fragment() {
 
 
         }
-        thisGradeList = gradeList.filter { it.courseName == param1 } as ArrayList<Grade>
+
+        /*
+        Take this course's grades from main list and delete them in the main list, and then do
+        various operation, adding, deleting and so on. Add the list back the main list when this
+        fragment destroyed.
+         */
+        when(param1){
+            "INFO6124" -> thisGradeList = gradeList6124
+            "INFO6125" -> thisGradeList = gradeList6125
+            "INFO6126" -> thisGradeList = gradeList6126
+            "INFO6127" -> thisGradeList = gradeList6127
+            "INFO6128" -> thisGradeList = gradeList6128
+            "INFO6129" -> thisGradeList = gradeList6129
+        }
+
     }
 
     override fun onCreateView(
@@ -163,6 +174,12 @@ class GradesListFragment : Fragment() {
 
 
 
+//    override fun onStop() {
+//        Log.d("MyTag", "detach")
+//        gradeList.addAll(thisGradeList)
+//        super.onStop()
+//    }
+
     private fun showFabMenu() {
         isFabShown = true
         //binding.fabShowMenu.isClickable = false
@@ -247,7 +264,7 @@ class GradesListFragment : Fragment() {
                     .setPositiveButton("OK"){
                     d,w ->
                     Log.d("MyTag", "clear all clicked")
-                        gradeList.removeAll(thisGradeList.toSet())
+
                     thisGradeList.clear()
                     viewAdapter.notifyDataSetChanged()
                     binding.tvNoEntry.visibility = TextView.VISIBLE
@@ -322,11 +339,11 @@ Don't create(). Only show(). Otherwise it won't work to overwrite the listner.
                 var grade = Grade(param1!!, type, fullMark.toInt(), myMark.toInt(), weight.toInt()
                 )
 
-                gradeList.add(grade)
+
                 thisGradeList.add(grade)
                 binding.tvNoEntry.visibility = TextView.GONE
                 dialog.dismiss()
-                Log.d("MyTag", "array size: ${gradeList.size}")
+                Log.d("MyTag", "array size: ${gradeList6124.size}")
             }
         }
     }

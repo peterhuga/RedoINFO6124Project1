@@ -14,6 +14,7 @@ class CourseAdapter (
     ) :BaseAdapter(){
         private lateinit var courseCodeTV: TextView
         private lateinit var currentGradeTV: TextView
+        private lateinit var currentMarksTV: TextView
 
     override fun getCount(): Int {
         return courseList.size
@@ -34,8 +35,10 @@ class CourseAdapter (
         convertView = LayoutInflater.from(context).inflate(R.layout.course_listview_item, parent, false)
         courseCodeTV = convertView.findViewById(R.id.textViewCourseCode)
         currentGradeTV = convertView.findViewById(R.id.textViewCurrentGrade)
+        currentMarksTV = convertView.findViewById(R.id.textViewCurrentTotalMark)
         courseCodeTV.text = courseList[position].courseCode
         currentGradeTV.text = courseList[position].currentGrade.toString() + "%"
+        currentMarksTV.text = courseList[position].currentMarks.toString()
 
 
 

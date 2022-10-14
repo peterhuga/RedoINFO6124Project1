@@ -15,6 +15,7 @@ import jwang.example.redoinfo6124project1.CourseAdapter
 import jwang.example.redoinfo6124project1.MainActivity
 import jwang.example.redoinfo6124project1.R
 import jwang.example.redoinfo6124project1.databinding.FragmentDashboardBinding
+import jwang.example.redoinfo6124project1.gradeList
 import jwang.example.redoinfo6124project1.models.Course
 
 
@@ -32,12 +33,12 @@ class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
 
     val courses: List<Course> = listOf(
-        Course("INFO6124", "Android App Development", 85),
-        Course("INFO6125", "iOS App Development", 0),
-        Course("INFO6126", "UI/UX Design" , 0),
-        Course("INFO6127", "Enterprise Platform" , 0),
-        Course("INFO6128", "Progressive Web Application" , 0),
-        Course("INFO6129", "Cross-platform App Development" , 0)
+        Course("INFO6124", "Android App Development", 0, 0),
+        Course("INFO6125", "iOS App Development", 0, 0),
+        Course("INFO6126", "UI/UX Design" , 0, 0),
+        Course("INFO6127", "Enterprise Platform" , 0, 0),
+        Course("INFO6128", "Progressive Web Application" , 0, 0),
+        Course("INFO6129", "Cross-platform App Development" , 0, 0)
     )
 
 
@@ -89,6 +90,26 @@ class DashboardFragment : Fragment() {
         inflater.inflate(R.menu.toolbar_main, menu)
 
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        for (course in courses) {
+            var currentGrade:Double = 0.0
+            var currentMark:Double = 0.0
+            var currentFullMark: Double = 0.0
+            gradeList.forEach {
+                if (it.courseName == course.courseCode) {
+                    currentFullMark += it.fullMark
+                    currentMark += it.myMark
+                    if (currentMark!=0.0) {
+                        currentGrade = Math.ceil(currentMark / currentFullMark * 100)
+                    }
+                }
+            }
+            course.currentMarks = currentMark.toInt()
+            course.currentGrade = currentGrade.toInt()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

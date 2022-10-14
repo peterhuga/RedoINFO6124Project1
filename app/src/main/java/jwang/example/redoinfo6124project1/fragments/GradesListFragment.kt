@@ -9,21 +9,21 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import jwang.example.redoinfo6124project1.GradeAdapter
 import jwang.example.redoinfo6124project1.MainActivity
 import jwang.example.redoinfo6124project1.R
 import jwang.example.redoinfo6124project1.databinding.FragmentGradesListBinding
 import jwang.example.redoinfo6124project1.gradeList
-
 import jwang.example.redoinfo6124project1.models.Grade
 import jwang.example.redoinfo6124project1.models.GradeType
-
 
 
 class GradesListFragment : Fragment() {
@@ -98,6 +98,50 @@ class GradesListFragment : Fragment() {
                 DividerItemDecoration.VERTICAL
             )
         )
+
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                // this method is called
+                // when the item is moved.
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // this method is called when we swipe our item to right direction.
+                // on below line we are getting the item at a particular position.
+                val deletedCourse: Grade =
+                    thisGradeList[viewHolder.adapterPosition]
+
+                // below line is to get the position
+                // of the item at that position.
+                val position = viewHolder.adapterPosition
+
+                // this method is called when item is swiped.
+                // below line is to remove item from our array list.
+                thisGradeList.removeAt(viewHolder.adapterPosition)
+
+                // below line is to notify our item is removed from adapter.
+                viewAdapter.notifyItemRemoved(viewHolder.adapterPosition)
+
+                // below line is to display our snackbar with action.
+                Snackbar.make(binding.recyclerView, deletedCourse.type.string, Snackbar.LENGTH_LONG)
+                    .setAction("Undo") {
+
+                            // adding on click listener to our action of snack bar.
+                            // below line is to add our item to array list with a position.
+                            thisGradeList.add(position, deletedCourse)
+
+                            // below line is to notify item is
+                            // added to our adapter class.
+                            viewAdapter.notifyItemInserted(position)
+                    }.show()
+            } // at last we are adding this
+            // to our recycler view.
+        }).attachToRecyclerView(binding.recyclerView)
 
         setHasOptionsMenu(true)
 
@@ -286,6 +330,8 @@ Don't create(). Only show(). Otherwise it won't work to overwrite the listner.
             }
         }
     }
+
+
 
     companion object {
         @JvmStatic

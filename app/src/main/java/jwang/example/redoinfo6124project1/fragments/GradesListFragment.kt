@@ -122,36 +122,30 @@ class GradesListFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                // this method is called when we swipe our item to right direction.
-                // on below line we are getting the item at a particular position.
+
                 val deletedCourse: Grade =
                     thisGradeList[viewHolder.adapterPosition]
 
-                // below line is to get the position
-                // of the item at that position.
+
                 val position = viewHolder.adapterPosition
 
-                // this method is called when item is swiped.
-                // below line is to remove item from our array list.
+
                 thisGradeList.removeAt(viewHolder.adapterPosition)
 
-                // below line is to notify our item is removed from adapter.
+
                 viewAdapter.notifyItemRemoved(viewHolder.adapterPosition)
 
-                // below line is to display our snackbar with action.
+
                 Snackbar.make(binding.recyclerView, deletedCourse.type.string, Snackbar.LENGTH_LONG)
                     .setAction("Undo") {
 
-                            // adding on click listener to our action of snack bar.
-                            // below line is to add our item to array list with a position.
+
                             thisGradeList.add(position, deletedCourse)
 
-                            // below line is to notify item is
-                            // added to our adapter class.
+
                             viewAdapter.notifyItemInserted(position)
                     }.show()
-            } // at last we are adding this
-            // to our recycler view.
+            }
         }).attachToRecyclerView(binding.recyclerView)
 
         setHasOptionsMenu(true)
@@ -171,14 +165,6 @@ class GradesListFragment : Fragment() {
             binding.tvNoEntry.visibility = TextView.GONE
         }
     }
-
-
-
-//    override fun onStop() {
-//        Log.d("MyTag", "detach")
-//        gradeList.addAll(thisGradeList)
-//        super.onStop()
-//    }
 
     private fun showFabMenu() {
         isFabShown = true
@@ -218,13 +204,8 @@ class GradesListFragment : Fragment() {
             }
         }
 
-
-
-
-
         binding.fabShowMenu.animate().duration = 100
         binding.fabShowMenu.animate().rotationBy(45.0f)
-
 
     }
 
@@ -341,6 +322,12 @@ Don't create(). Only show(). Otherwise it won't work to overwrite the listner.
 
 
                 thisGradeList.add(grade)
+/*
+At first, the recyclerview list could be updated without notifyItem after adding, because after the dialog being
+dismissed, the fragment creates view again and assign adapter again. However, if the keyboard is dismissed first, onViewCreated
+occurs before saving button being clicked, and then UI will not updated even though data has been added.
+ */
+                viewAdapter.notifyItemInserted(thisGradeList.size - 1)
                 binding.tvNoEntry.visibility = TextView.GONE
                 dialog.dismiss()
                 Log.d("MyTag", "array size: ${gradeList6124.size}")

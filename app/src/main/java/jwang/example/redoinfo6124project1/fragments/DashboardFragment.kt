@@ -55,9 +55,6 @@ class DashboardFragment : Fragment() {
         binding = FragmentDashboardBinding.inflate(inflater, container, false)
 
         setHasOptionsMenu(true)
-
-
-
         binding.listViewCourses.adapter = CourseAdapter(requireContext(), courses)
         binding.listViewCourses.onItemClickListener =
             OnItemClickListener { parent, view, position, id ->

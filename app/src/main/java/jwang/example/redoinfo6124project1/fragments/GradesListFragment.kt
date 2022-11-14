@@ -249,7 +249,7 @@ class GradesListFragment : Fragment() {
                     thisGradeList.clear()
                     viewAdapter.notifyDataSetChanged()
                     binding.tvNoEntry.visibility = TextView.VISIBLE
-                        d.dismiss()
+                    d.dismiss()
                     }
                     .setNegativeButton("Cancel"){
                         dialog, which -> dialog.cancel()

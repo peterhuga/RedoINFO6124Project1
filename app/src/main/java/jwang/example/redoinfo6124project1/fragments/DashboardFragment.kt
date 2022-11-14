@@ -61,12 +61,10 @@ class DashboardFragment : Fragment() {
                 val courseCode = courses.get(position).courseCode
                 val courseName = courses.get(position).courseName
                 val transaction = fragmentManager?.beginTransaction()
-
-                    transaction?.replace(
-                        R.id.fragment_placeholder,
-                        GradesListFragment.newInstance(courseCode, courseName)
-                    )?.addToBackStack(null)?.commit()
-
+                transaction?.replace(
+                    R.id.fragment_placeholder,
+                    GradesListFragment.newInstance(courseCode, courseName)
+                )?.addToBackStack(null)?.commit()
             }
         return binding.root
     }
@@ -93,17 +91,13 @@ class DashboardFragment : Fragment() {
         for (course in courses) {
             when(course.courseCode){
                 "INFO6124" -> getSummary(course, gradeList6124)
-
                 "INFO6125" -> getSummary(course, gradeList6125)
                 "INFO6126" -> getSummary(course, gradeList6126)
                 "INFO6127" -> getSummary(course, gradeList6127)
                 "INFO6128" -> getSummary(course, gradeList6128)
                 "INFO6129" -> getSummary(course, gradeList6129)
-
-
             }
         }
-
     }
 
     private fun getSummary(course: Course, gradeList: ArrayList<Grade>) {
@@ -111,13 +105,11 @@ class DashboardFragment : Fragment() {
         var currentMark: Double = 0.0
         var currentFullMark: Double = 0.0
         gradeList.forEach {
-
                 currentFullMark += it.fullMark
                 currentMark += it.myMark
                 if (currentMark != 0.0) {
                     currentGrade = Math.ceil(currentMark / currentFullMark * 100)
                 }
-
         }
         course.currentMarks = currentMark.toInt()
         course.currentGrade = currentGrade.toInt()

@@ -39,4 +39,6 @@
     <string name="total_grade_submitted">Total Grade Submitted %</string>
     <string name="grade_type">Grade Type</string>
     <string name="see_records">See Records</string>
+    <string name="about_content">Authtor: Jianwei Wang\n\nThis app is for students to log their grades as they are progressing in the first semester of MAP program.\n\nOn the dashboard, users can see the summary that shows the cumulative grade (in percentage) and marks for every course. By clicking any course card, users will go to the course screen where all completed assessment items are displayed and new one are to be added in different categories. When needed, a particular assessment can be deleted by swiping, or all items are deleted once by clicking "Clear All".
+        \n\nThis app does not need internet connection to work, as all the data is stored locally. </string>
 </resources>
